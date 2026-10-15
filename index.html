@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rheology Processing SOP</title>
+  <style>
+    :root { --ink:#132238; --blue:#195d90; --light:#eef5f8; --line:#d5e0e8; --accent:#c54f36; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); font-family:Arial,"Microsoft YaHei",sans-serif; line-height:1.65; background:#fafcfd; }
+    header { padding:76px 8% 68px; color:#fff; background:linear-gradient(130deg,#102941,#176a92); }
+    header p { max-width:720px; margin:14px 0 0; font-size:1.1rem; opacity:.92; }
+    h1 { margin:0; font-size:clamp(2rem,5vw,3.6rem); letter-spacing:-.04em; }
+    h2 { margin:0 0 14px; font-size:1.5rem; }
+    main { max-width:1080px; padding:48px 24px 80px; margin:auto; }
+    .notice { border-left:5px solid var(--accent); background:#fff7f3; padding:16px 20px; margin-bottom:34px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; margin:24px 0 42px; }
+    .card { padding:22px; border:1px solid var(--line); border-radius:12px; background:#fff; box-shadow:0 8px 26px rgba(24,62,93,.05); }
+    .tag { display:inline-block; margin-bottom:8px; padding:2px 9px; border-radius:999px; color:var(--blue); background:var(--light); font-size:.82rem; font-weight:700; }
+    table { width:100%; border-collapse:collapse; background:#fff; margin:18px 0 38px; }
+    th, td { padding:13px; text-align:left; vertical-align:top; border:1px solid var(--line); }
+    th { color:#fff; background:var(--blue); }
+    code { padding:2px 5px; border-radius:4px; color:#784126; background:#fff0e9; }
+    details { margin:12px 0; padding:14px 18px; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    summary { cursor:pointer; font-weight:700; }
+    footer { padding:28px 8%; color:#607285; text-align:center; background:#edf3f6; font-size:.92rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Rheology Processing SOP</h1>
+    <p>PMFL hydrogel rheology data: reproducible extraction, unit conversion, Origin import and project delivery.</p>
+  </header>
+  <main>
+    <section class="notice">
+      <strong>Data integrity first.</strong> Raw files are read-only. No deletion, interpolation, smoothing or fabricated points are permitted.
+    </section>
+
+    <h2>Delivery contract</h2>
+    <div class="grid">
+      <article class="card"><span class="tag">01</span><h3>Versioned output</h3><p>Repeated processing never overwrites an earlier result: <code>R01_</code>, <code>R02_</code>, and so on.</p></article>
+      <article class="card"><span class="tag">02</span><h3>Excel data file</h3><p>One workbook with normalized plot data and traceable raw/converted values.</p></article>
+      <article class="card"><span class="tag">03</span><h3>Origin project</h3><p>One matching <code>.opju</code> project containing imported data, axes and plots.</p></article>
+      <article class="card"><span class="tag">04</span><h3>No public raw data by default</h3><p>This website documents the workflow only. Experimental raw data remain private unless separately approved.</p></article>
+    </div>
+
+    <h2>Test-specific processing</h2>
+    <table>
+      <thead><tr><th>Test</th><th>Plot data</th><th>Origin plot type and axes</th></tr></thead>
+      <tbody>
+        <tr><td>F — Frequency sweep</td><td>ω (rad/s), G′ (Pa), G″ (Pa); MPa × 10<sup>6</sup></td><td>Line + symbol; X Log10, Y Log10</td></tr>
+        <tr><td>S — Amplitude sweep</td><td>Strain (%), G′ (Pa), G″ (Pa); MPa × 10<sup>6</sup></td><td>Line + symbol; X Log10, Y Log10</td></tr>
+        <tr><td>V — Flow sweep</td><td>Shear rate (1/s), viscosity (Pa·s); no unit conversion</td><td>Line + symbol; X Log10, Y Log10</td></tr>
+        <tr><td>SS — Time sweep</td><td>Time (s), G′ (Pa), G″ (Pa); MPa × 10<sup>6</sup></td><td>Scatter only; X linear, Y Log10</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Critical checks before delivery</h2>
+    <details open><summary>SS time sweep</summary><p>Use the true cumulative <code>Time t</code>, not <code>Step time</code>. Convert minutes to seconds only when no native seconds column exists. Keep switching gaps and all original points. Retain only rows where both G′ and G″ are numeric.</p></details>
+    <details><summary>Units</summary><p>G′ and G″ exported in MPa must be converted in new columns to Pa. Viscosity already exported as Pa·s must not be converted again.</p></details>
+    <details><summary>Origin verification</summary><p>After saving, reopen the project and confirm the X/Y column mapping, axis scale, data points and legend labels. Default A/B/C labels must be replaced by physical labels.</p></details>
+    <p><strong>Full document:</strong> <a href="rheology_processing_SOP_draft.md">Rheology Processing SOP (Markdown)</a></p>
+  </main>
+  <footer>Rheology Processing SOP · Version-controlled workflow for research data handling</footer>
+</body>
+</html>
